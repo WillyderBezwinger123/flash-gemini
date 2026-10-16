@@ -5,6 +5,13 @@ const { execSync } = require('child_process');
 
 const isDev = !app.isPackaged && process.env.NODE_ENV !== 'production';
 
+// Use a dedicated writable user-data folder inside the project to prevent Windows cache lock errors
+const localUserDataDir = path.join(__dirname, '../.user-data');
+if (!fs.existsSync(localUserDataDir)) {
+  fs.mkdirSync(localUserDataDir, { recursive: true });
+}
+app.setPath('userData', localUserDataDir);
+
 function getStoragePath() {
   return path.join(app.getPath('userData'), 'flash-calendar-data.json');
 }
@@ -18,6 +25,7 @@ function createWindow() {
     title: 'Flash Calendar & Tasks',
     backgroundColor: '#0f172a',
     autoHideMenuBar: true,
+    show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
@@ -32,6 +40,17 @@ function createWindow() {
   } else {
     mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
   }
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+    mainWindow.setAlwaysOnTop(true);
+    mainWindow.focus();
+    setTimeout(() => {
+      if (!mainWindow.isDestroyed()) {
+        mainWindow.setAlwaysOnTop(false);
+      }
+    }, 800);
+  });
 
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     shell.openExternal(url);
