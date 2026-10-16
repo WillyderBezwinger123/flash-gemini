@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/types.ts","./src/components/calendarviews.tsx","./src/components/cloudsyncmodal.tsx","./src/components/taskmodal.tsx","./src/components/tasksandroutinespanel.tsx","./src/services/syncservice.ts","./src/utils/dateutils.ts"],"version":"5.6.3"}

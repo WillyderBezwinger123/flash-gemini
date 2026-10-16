@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Flash Calendar &amp; Tasks</string>
+    <string name="title_activity_main">Flash Calendar &amp; Tasks</string>
+    <string name="package_name">com.flashgemini.calendartasks</string>
+    <string name="custom_url_scheme">com.flashgemini.calendartasks</string>
+</resources>
